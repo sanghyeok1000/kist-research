@@ -164,7 +164,7 @@ The separate file [`toric-code-torus.html`](./toric-code-torus.html) is an inter
 
 The animation shows how the periodic boundaries of the square lattice correspond to a torus. The two non-contractible directions of the torus provide the topological structure underlying the logical operators.
 
-▶ **[Watch the toric-code topology animation](./assets/surface_code.mov)**
+![Toric-code topology visualization](./assets/surface_code.gif)
 
 ### 5.2 Error sampling
 
