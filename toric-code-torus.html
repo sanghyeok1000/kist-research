@@ -1,0 +1,2133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Toric Code Torus Visualizer</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;max-width:736px;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Toric Code Torus Visualizer" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Toric Code Torus Visualizer&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(--background) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: light-dark(rgb(255 255 255), rgb(24 24 24));
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 12.5px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;toric-code-torus&quot; class=&quot;toric-vis&quot;&gt;
+  &lt;div
+    class=&quot;toric-stage&quot;
+    role=&quot;img&quot;
+    aria-label=&quot;주기적 경계조건을 가진 토릭 코드 데이터 큐빗의 3차원 토러스 시각화&quot;
+  &gt;&lt;/div&gt;
+
+  &lt;div class=&quot;toric-topbar&quot;&gt;
+    &lt;div class=&quot;toric-metrics&quot; aria-live=&quot;polite&quot;&gt;
+      &lt;span&gt;&lt;strong data-value=&quot;size&quot;&gt;L = 4&lt;/strong&gt;&lt;/span&gt;
+      &lt;span&gt;&lt;strong data-value=&quot;qubits&quot;&gt;32&lt;/strong&gt; data qubits&lt;/span&gt;
+      &lt;span&gt;&lt;strong data-value=&quot;lost&quot;&gt;0&lt;/strong&gt; lost&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;toric-view-switch&quot; aria-label=&quot;격자 표시 방식&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-view=&quot;flat&quot; aria-pressed=&quot;false&quot;&gt;
+        2D 펼치기
+      &lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-view=&quot;torus&quot; aria-pressed=&quot;true&quot;&gt;
+        &lt;i data-lucide=&quot;play&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+        토러스 만들기
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;toric-controls card&quot;&gt;
+    &lt;label class=&quot;form-label toric-range-label&quot; for=&quot;toric-morph&quot;&gt;
+      &lt;span&gt;변형 단계&lt;/span&gt;
+      &lt;strong data-value=&quot;phase&quot;&gt;토러스 완성&lt;/strong&gt;
+    &lt;/label&gt;
+    &lt;input id=&quot;toric-morph&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;1&quot; step=&quot;0.001&quot; value=&quot;1&quot;&gt;
+
+    &lt;label class=&quot;form-label toric-range-label&quot; for=&quot;toric-size&quot;&gt;
+      &lt;span&gt;격자 크기&lt;/span&gt;
+      &lt;strong data-value=&quot;size-control&quot;&gt;4&lt;/strong&gt;
+    &lt;/label&gt;
+    &lt;input id=&quot;toric-size&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;2&quot; max=&quot;14&quot; step=&quot;1&quot; value=&quot;4&quot;&gt;
+
+    &lt;label class=&quot;form-label toric-range-label&quot; for=&quot;toric-loss&quot;&gt;
+      &lt;span&gt;Loss 확률&lt;/span&gt;
+      &lt;strong data-value=&quot;loss-rate&quot;&gt;0.10&lt;/strong&gt;
+    &lt;/label&gt;
+    &lt;input id=&quot;toric-loss&quot; class=&quot;form-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;0.50&quot; step=&quot;0.01&quot; value=&quot;0.10&quot;&gt;
+
+    &lt;div class=&quot;toric-control-row&quot;&gt;
+      &lt;label class=&quot;form-check form-switch&quot;&gt;
+        &lt;input id=&quot;toric-surface&quot; class=&quot;form-check-input&quot; type=&quot;checkbox&quot; checked&gt;
+        &lt;span class=&quot;form-check-label&quot;&gt;표면&lt;/span&gt;
+      &lt;/label&gt;
+      &lt;label class=&quot;form-check form-switch&quot;&gt;
+        &lt;input id=&quot;toric-cycles&quot; class=&quot;form-check-input&quot; type=&quot;checkbox&quot; checked&gt;
+        &lt;span class=&quot;form-check-label&quot;&gt;주기 경계&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;toric-actions&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-action=&quot;resample&quot;&gt;
+        &lt;i data-lucide=&quot;refresh-cw&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+        Loss 재추출
+      &lt;/button&gt;
+      &lt;button type=&quot;button&quot; class=&quot;btn&quot; data-action=&quot;reset&quot;&gt;
+        &lt;i data-lucide=&quot;scan&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+        시점 초기화
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;toric-phase&quot; aria-live=&quot;polite&quot;&gt;
+    &lt;div class=&quot;toric-phase-track&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;span data-value=&quot;phase-progress&quot;&gt;&lt;/span&gt;
+      &lt;i&gt;&lt;/i&gt;
+      &lt;i&gt;&lt;/i&gt;
+      &lt;i&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;toric-phase-labels&quot;&gt;
+      &lt;span data-phase=&quot;flat&quot;&gt;1 평면&lt;/span&gt;
+      &lt;span data-phase=&quot;cylinder&quot;&gt;2 원통&lt;/span&gt;
+      &lt;span data-phase=&quot;torus&quot; class=&quot;is-active&quot;&gt;3 토러스&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;toric-legend&quot; aria-label=&quot;범례&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;toric-dot toric-dot-h&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;H edge qubit&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;toric-dot toric-dot-v&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;V edge qubit&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;toric-diamond&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;known loss&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;toric-line toric-line-u&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;좌·우 경계&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;toric-line toric-line-v&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;위·아래 경계&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;toric-selection&quot; aria-live=&quot;polite&quot; data-value=&quot;selection&quot;&gt;&lt;/div&gt;
+
+  &lt;div class=&quot;toric-swatches&quot; aria-hidden=&quot;true&quot;&gt;
+    &lt;i data-color=&quot;h&quot;&gt;&lt;/i&gt;
+    &lt;i data-color=&quot;v&quot;&gt;&lt;/i&gt;
+    &lt;i data-color=&quot;loss&quot;&gt;&lt;/i&gt;
+    &lt;i data-color=&quot;u&quot;&gt;&lt;/i&gt;
+    &lt;i data-color=&quot;cycle-v&quot;&gt;&lt;/i&gt;
+    &lt;i data-color=&quot;grid&quot;&gt;&lt;/i&gt;
+    &lt;i data-color=&quot;surface&quot;&gt;&lt;/i&gt;
+    &lt;i data-color=&quot;selected&quot;&gt;&lt;/i&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  #toric-code-torus {
+    position: relative;
+    width: 100%;
+    height: 680px;
+    min-height: 620px;
+    overflow: hidden;
+    background:
+      linear-gradient(color-mix(in srgb, var(--card) 86%, transparent), transparent 36%),
+      var(--background);
+    color: var(--foreground);
+  }
+
+  #toric-code-torus .toric-stage {
+    position: absolute;
+    inset: 0;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  #toric-code-torus .toric-stage:active {
+    cursor: grabbing;
+  }
+
+  #toric-code-torus .toric-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #toric-code-torus .toric-topbar {
+    position: absolute;
+    z-index: 3;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    pointer-events: none;
+  }
+
+  #toric-code-torus .toric-metrics,
+  #toric-code-torus .toric-view-switch,
+  #toric-code-torus .toric-controls,
+  #toric-code-torus .toric-phase,
+  #toric-code-torus .toric-legend,
+  #toric-code-torus .toric-selection {
+    pointer-events: auto;
+  }
+
+  #toric-code-torus .toric-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--background) 82%, transparent);
+    backdrop-filter: blur(10px);
+  }
+
+  #toric-code-torus .toric-metrics span {
+    white-space: nowrap;
+  }
+
+  #toric-code-torus .toric-view-switch {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--background) 82%, transparent);
+    backdrop-filter: blur(10px);
+  }
+
+  #toric-code-torus .toric-controls {
+    position: absolute;
+    z-index: 3;
+    top: 72px;
+    right: 14px;
+    width: min(260px, calc(100% - 28px));
+    padding: 14px;
+    background: color-mix(in srgb, var(--card) 90%, transparent);
+    backdrop-filter: blur(12px);
+  }
+
+  #toric-code-torus .toric-range-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  #toric-code-torus .form-range + .toric-range-label {
+    margin-top: 13px;
+  }
+
+  #toric-code-torus .toric-control-row,
+  #toric-code-torus .toric-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-top: 14px;
+  }
+
+  #toric-code-torus .toric-actions {
+    gap: 8px;
+  }
+
+  #toric-code-torus .toric-actions .btn {
+    flex: 1 1 auto;
+  }
+
+  #toric-code-torus .toric-phase {
+    position: absolute;
+    z-index: 3;
+    left: 14px;
+    bottom: 104px;
+    width: min(410px, calc(100% - 308px));
+    min-width: 300px;
+    pointer-events: none;
+  }
+
+  #toric-code-torus .toric-phase-track {
+    position: relative;
+    height: 3px;
+    margin: 0 7px;
+    background: color-mix(in srgb, var(--muted-foreground) 30%, transparent);
+  }
+
+  #toric-code-torus .toric-phase-track span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 100%;
+    background: var(--foreground);
+    transition: width 80ms linear;
+  }
+
+  #toric-code-torus .toric-phase-track i {
+    position: absolute;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--foreground);
+    transform: translate(-50%, -50%);
+  }
+
+  #toric-code-torus .toric-phase-track i:nth-of-type(1) { left: 0; }
+  #toric-code-torus .toric-phase-track i:nth-of-type(2) { left: 46%; }
+  #toric-code-torus .toric-phase-track i:nth-of-type(3) { left: 100%; }
+
+  #toric-code-torus .toric-phase-labels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  #toric-code-torus .toric-phase-labels span {
+    color: var(--muted-foreground);
+  }
+
+  #toric-code-torus .toric-phase-labels span:nth-child(2) {
+    text-align: center;
+  }
+
+  #toric-code-torus .toric-phase-labels span:last-child {
+    text-align: right;
+  }
+
+  #toric-code-torus .toric-phase-labels .is-active {
+    color: var(--foreground);
+    font-weight: 500;
+  }
+
+  #toric-code-torus .toric-legend {
+    position: absolute;
+    z-index: 3;
+    left: 14px;
+    bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    max-width: calc(100% - 28px);
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--background) 82%, transparent);
+    backdrop-filter: blur(10px);
+  }
+
+  #toric-code-torus .toric-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  #toric-code-torus .toric-dot,
+  #toric-code-torus .toric-diamond {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    flex: 0 0 auto;
+  }
+
+  #toric-code-torus .toric-dot {
+    border-radius: 50%;
+  }
+
+  #toric-code-torus .toric-dot-h {
+    background: var(--viz-series-1);
+  }
+
+  #toric-code-torus .toric-dot-v {
+    background: var(--viz-series-2);
+  }
+
+  #toric-code-torus .toric-diamond {
+    transform: rotate(45deg);
+    background: var(--destructive);
+  }
+
+  #toric-code-torus .toric-line {
+    display: inline-block;
+    width: 18px;
+    height: 3px;
+    flex: 0 0 auto;
+  }
+
+  #toric-code-torus .toric-line-u {
+    background: var(--viz-series-3);
+  }
+
+  #toric-code-torus .toric-line-v {
+    background: var(--viz-series-4);
+  }
+
+  #toric-code-torus .toric-selection {
+    position: absolute;
+    z-index: 3;
+    left: 14px;
+    right: 14px;
+    bottom: 12px;
+    min-height: 28px;
+    padding: 6px 10px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--background) 84%, transparent);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+  }
+
+  #toric-code-torus .toric-swatches {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  #toric-code-torus [data-color=&quot;h&quot;] { color: var(--viz-series-1); }
+  #toric-code-torus [data-color=&quot;v&quot;] { color: var(--viz-series-2); }
+  #toric-code-torus [data-color=&quot;loss&quot;] { color: var(--destructive); }
+  #toric-code-torus [data-color=&quot;u&quot;] { color: var(--viz-series-3); }
+  #toric-code-torus [data-color=&quot;cycle-v&quot;] { color: var(--viz-series-4); }
+  #toric-code-torus [data-color=&quot;grid&quot;] { color: var(--muted-foreground); }
+  #toric-code-torus [data-color=&quot;surface&quot;] { color: var(--muted); }
+  #toric-code-torus [data-color=&quot;selected&quot;] { color: var(--foreground); }
+
+  @media (max-width: 560px) {
+    #toric-code-torus {
+      height: 760px;
+    }
+
+    #toric-code-torus .toric-topbar {
+      align-items: flex-start;
+    }
+
+    #toric-code-torus .toric-metrics {
+      max-width: 170px;
+      gap: 3px 9px;
+    }
+
+    #toric-code-torus .toric-controls {
+      top: 104px;
+      right: 10px;
+      width: min(224px, calc(100% - 20px));
+    }
+
+    #toric-code-torus .toric-legend {
+      left: 10px;
+      right: 10px;
+      bottom: 54px;
+    }
+
+    #toric-code-torus .toric-phase {
+      left: 10px;
+      bottom: 148px;
+      width: calc(100% - 20px);
+      min-width: 0;
+    }
+
+    #toric-code-torus .toric-selection {
+      left: 10px;
+      right: 10px;
+    }
+  }
+&lt;/style&gt;
+
+&lt;script type=&quot;importmap&quot;&gt;
+{
+  &quot;imports&quot;: {
+    &quot;three&quot;: &quot;https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js&quot;,
+    &quot;three/addons/&quot;: &quot;https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/&quot;
+  }
+}
+&lt;/script&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  import * as THREE from &quot;three&quot;;
+  import { OrbitControls } from &quot;three/addons/controls/OrbitControls.js&quot;;
+
+  const root = document.getElementById(&quot;toric-code-torus&quot;);
+  const stage = root.querySelector(&quot;.toric-stage&quot;);
+  const morphInput = root.querySelector(&quot;#toric-morph&quot;);
+  const sizeInput = root.querySelector(&quot;#toric-size&quot;);
+  const lossInput = root.querySelector(&quot;#toric-loss&quot;);
+  const surfaceInput = root.querySelector(&quot;#toric-surface&quot;);
+  const cyclesInput = root.querySelector(&quot;#toric-cycles&quot;);
+  const selectionLabel = root.querySelector(&#x27;[data-value=&quot;selection&quot;]&#x27;);
+  const sizeLabels = root.querySelectorAll(&#x27;[data-value=&quot;size&quot;]&#x27;);
+  const sizeControl = root.querySelector(&#x27;[data-value=&quot;size-control&quot;]&#x27;);
+  const qubitLabel = root.querySelector(&#x27;[data-value=&quot;qubits&quot;]&#x27;);
+  const lostLabel = root.querySelector(&#x27;[data-value=&quot;lost&quot;]&#x27;);
+  const lossRateLabel = root.querySelector(&#x27;[data-value=&quot;loss-rate&quot;]&#x27;);
+  const phaseLabel = root.querySelector(&#x27;[data-value=&quot;phase&quot;]&#x27;);
+  const phaseProgress = root.querySelector(&#x27;[data-value=&quot;phase-progress&quot;]&#x27;);
+  const phaseSteps = root.querySelectorAll(&quot;[data-phase]&quot;);
+  const viewButtons = root.querySelectorAll(&quot;[data-view]&quot;);
+  const resampleButton = root.querySelector(&#x27;[data-action=&quot;resample&quot;]&#x27;);
+  const resetButton = root.querySelector(&#x27;[data-action=&quot;reset&quot;]&#x27;);
+
+  const parseCssColor = (cssColor) =&gt; {
+    const rgbMatch = cssColor.match(/rgba?\(([-.\d]+)[, ]+([-.\d]+)[, ]+([-.\d]+)/i);
+    if (rgbMatch) {
+      return new THREE.Color().setRGB(
+        Number(rgbMatch[1]) / 255,
+        Number(rgbMatch[2]) / 255,
+        Number(rgbMatch[3]) / 255,
+        THREE.SRGBColorSpace,
+      );
+    }
+    const srgbMatch = cssColor.match(/color\(srgb\s+([-.\d]+)\s+([-.\d]+)\s+([-.\d]+)/i);
+    if (srgbMatch) {
+      return new THREE.Color().setRGB(
+        Number(srgbMatch[1]),
+        Number(srgbMatch[2]),
+        Number(srgbMatch[3]),
+        THREE.SRGBColorSpace,
+      );
+    }
+    return new THREE.Color().setStyle(cssColor);
+  };
+
+  const colorFromTheme = (name) =&gt; {
+    const element = root.querySelector(`[data-color=&quot;${name}&quot;]`);
+    return parseCssColor(getComputedStyle(element).color);
+  };
+
+  const colors = {
+    h: colorFromTheme(&quot;h&quot;),
+    v: colorFromTheme(&quot;v&quot;),
+    loss: colorFromTheme(&quot;loss&quot;),
+    u: colorFromTheme(&quot;u&quot;),
+    cycleV: colorFromTheme(&quot;cycle-v&quot;),
+    grid: colorFromTheme(&quot;grid&quot;),
+    surface: colorFromTheme(&quot;surface&quot;),
+    selected: colorFromTheme(&quot;selected&quot;),
+  };
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  stage.appendChild(renderer.domElement);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.075;
+  controls.enablePan = false;
+  controls.minDistance = 5.2;
+  controls.maxDistance = 21;
+
+  scene.add(new THREE.HemisphereLight(colors.selected, colors.surface, 1.7));
+  const keyLight = new THREE.DirectionalLight(colors.selected, 2.5);
+  keyLight.position.set(5, -4, 8);
+  scene.add(keyLight);
+
+  const model = new THREE.Group();
+  scene.add(model);
+
+  const majorRadius = 3.05;
+  const minorRadius = 1.34;
+  const flatSpan = 6.4;
+  const rollEnd = 0.46;
+  const edgeSegments = 5;
+  const cycleSegments = 128;
+  const surfaceUSegments = 72;
+  const surfaceVSegments = 36;
+  const reducedMotion = window.matchMedia(&quot;(prefers-reduced-motion: reduce)&quot;).matches;
+  const flatCamera = new THREE.Vector3(0, 0, 13.5);
+  const cylinderCamera = new THREE.Vector3(8.4, -10.8, 7.3);
+  const torusCamera = new THREE.Vector3(9.6, -10.2, 8.2);
+  const dummy = new THREE.Object3D();
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+
+  let L = Number(sizeInput.value);
+  let pLoss = Number(lossInput.value);
+  let lossSample = [];
+  let edges = [];
+  let edgeLine = null;
+  let edgeCoordinates = [];
+  let aliveMesh = null;
+  let lostMesh = null;
+  let morphSurface = null;
+  let surfaceCoordinates = [];
+  let boundaryLines = [];
+  let selectedMarker = null;
+  let selectedEdgeIndex = 0;
+  let morph = 1;
+  let morphTarget = 1;
+  let morphTransition = null;
+  let cameraAuto = true;
+  let pointerStart = null;
+
+  function smoothstep(value) {
+    const clamped = THREE.MathUtils.clamp(value, 0, 1);
+    return clamped * clamped * (3 - 2 * clamped);
+  }
+
+  function cameraPositionForMorph(amount, target = new THREE.Vector3()) {
+    if (amount &lt;= rollEnd) {
+      return target.lerpVectors(flatCamera, cylinderCamera, smoothstep(amount / rollEnd));
+    }
+    return target.lerpVectors(
+      cylinderCamera,
+      torusCamera,
+      smoothstep((amount - rollEnd) / (1 - rollEnd)),
+    );
+  }
+
+  function resetCamera() {
+    cameraAuto = true;
+    camera.position.copy(cameraPositionForMorph(morph));
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
+
+  function flatPoint(a, b, target = new THREE.Vector3()) {
+    return target.set(
+      (a / L - 0.5) * flatSpan,
+      (b / L - 0.5) * flatSpan,
+      0,
+    );
+  }
+
+  function cylinderPoint(a, b, target = new THREE.Vector3()) {
+    const v = (2 * Math.PI * b) / L;
+    return target.set(
+      (a / L - 0.5) * flatSpan,
+      minorRadius * Math.cos(v),
+      minorRadius * Math.sin(v),
+    );
+  }
+
+  function bentTubePoint(a, b, bendAmount, target = new THREE.Vector3()) {
+    const q = THREE.MathUtils.clamp(bendAmount, 0, 1);
+    if (q &lt; 1e-6) {
+      return cylinderPoint(a, b, target);
+    }
+
+    const u = 2 * Math.PI * (a / L - 0.5);
+    const v = (2 * Math.PI * b) / L;
+    const theta = q * u;
+    const baseRadius = flatSpan / (2 * Math.PI);
+    const curveRadius = baseRadius / q;
+    const centerScale = THREE.MathUtils.lerp(1, majorRadius / baseRadius, smoothstep(q));
+    const centerX = curveRadius * Math.sin(theta) * centerScale;
+    const centerY = (curveRadius * (Math.cos(theta) - 1) + q * baseRadius) * centerScale;
+    const crossSection = minorRadius * Math.cos(v);
+
+    return target.set(
+      centerX + crossSection * Math.sin(theta),
+      centerY + crossSection * Math.cos(theta),
+      minorRadius * Math.sin(v),
+    );
+  }
+
+  function displayPoint(a, b, amount = morph, target = new THREE.Vector3()) {
+    if (amount &lt;= rollEnd) {
+      const flat = flatPoint(a, b, new THREE.Vector3());
+      const cylinder = cylinderPoint(a, b, new THREE.Vector3());
+      return target.lerpVectors(flat, cylinder, smoothstep(amount / rollEnd));
+    }
+    return bentTubePoint(
+      a,
+      b,
+      smoothstep((amount - rollEnd) / (1 - rollEnd)),
+      target,
+    );
+  }
+
+  function edgePoint(edge, t, amount = morph, target = new THREE.Vector3()) {
+    if (edge.orientation === &quot;H&quot;) {
+      return displayPoint(edge.x + t, edge.y, amount, target);
+    } else {
+      return displayPoint(edge.x, edge.y + t, amount, target);
+    }
+  }
+
+  function makeEdges() {
+    const result = [];
+    for (const orientation of [&quot;H&quot;, &quot;V&quot;]) {
+      for (let y = 0; y &lt; L; y += 1) {
+        for (let x = 0; x &lt; L; x += 1) {
+          result.push({ orientation, x, y });
+        }
+      }
+    }
+    return result;
+  }
+
+  function disposeObject(object) {
+    if (!object) return;
+    model.remove(object);
+    object.geometry?.dispose();
+    if (Array.isArray(object.material)) {
+      object.material.forEach((material) =&gt; material.dispose());
+    } else {
+      object.material?.dispose();
+    }
+  }
+
+  function buildSurface() {
+    disposeObject(morphSurface);
+    surfaceCoordinates = [];
+    const positions = [];
+    const indices = [];
+
+    for (let vIndex = 0; vIndex &lt;= surfaceVSegments; vIndex += 1) {
+      for (let uIndex = 0; uIndex &lt;= surfaceUSegments; uIndex += 1) {
+        const a = (L * uIndex) / surfaceUSegments;
+        const b = (L * vIndex) / surfaceVSegments;
+        surfaceCoordinates.push([a, b]);
+        const point = displayPoint(a, b);
+        positions.push(point.x, point.y, point.z);
+      }
+    }
+
+    const rowLength = surfaceUSegments + 1;
+    for (let vIndex = 0; vIndex &lt; surfaceVSegments; vIndex += 1) {
+      for (let uIndex = 0; uIndex &lt; surfaceUSegments; uIndex += 1) {
+        const a = vIndex * rowLength + uIndex;
+        const b = a + 1;
+        const c = a + rowLength;
+        const d = c + 1;
+        indices.push(a, c, b, b, c, d);
+      }
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
+    positionAttribute.setUsage(THREE.DynamicDrawUsage);
+    geometry.setAttribute(&quot;position&quot;, positionAttribute);
+    geometry.setIndex(indices);
+    geometry.computeVertexNormals();
+
+    morphSurface = new THREE.Mesh(
+      geometry,
+      new THREE.MeshPhysicalMaterial({
+        color: colors.surface,
+        transparent: true,
+        opacity: 0.18,
+        roughness: 0.84,
+        metalness: 0.02,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      }),
+    );
+    model.add(morphSurface);
+  }
+
+  function buildEdgeLines() {
+    disposeObject(edgeLine);
+    edgeCoordinates = [];
+    const positions = [];
+
+    edges.forEach((edge) =&gt; {
+      for (let segment = 0; segment &lt; edgeSegments; segment += 1) {
+        const t0 = segment / edgeSegments;
+        const t1 = (segment + 1) / edgeSegments;
+        edgeCoordinates.push([edge, t0], [edge, t1]);
+        const p0 = edgePoint(edge, t0);
+        const p1 = edgePoint(edge, t1);
+        positions.push(p0.x, p0.y, p0.z, p1.x, p1.y, p1.z);
+      }
+    });
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(&quot;position&quot;, new THREE.Float32BufferAttribute(positions, 3));
+    edgeLine = new THREE.LineSegments(
+      geometry,
+      new THREE.LineBasicMaterial({
+        color: colors.grid,
+        transparent: true,
+        opacity: 0.42,
+      }),
+    );
+    model.add(edgeLine);
+  }
+
+  function buildQubitMeshes() {
+    disposeObject(aliveMesh);
+    disposeObject(lostMesh);
+
+    const aliveIndices = [];
+    const lostIndices = [];
+    lossSample.forEach((lost, edgeIndex) =&gt; {
+      (lost ? lostIndices : aliveIndices).push(edgeIndex);
+    });
+
+    const sphere = new THREE.SphereGeometry(1, 14, 10);
+    const sphereMaterial = new THREE.MeshStandardMaterial({
+      roughness: 0.5,
+      metalness: 0.03,
+    });
+    aliveMesh = new THREE.InstancedMesh(sphere, sphereMaterial, aliveIndices.length);
+    aliveMesh.userData.edgeIndices = aliveIndices;
+    aliveIndices.forEach((edgeIndex, instanceIndex) =&gt; {
+      aliveMesh.setColorAt(
+        instanceIndex,
+        edges[edgeIndex].orientation === &quot;H&quot; ? colors.h : colors.v,
+      );
+    });
+    if (aliveMesh.instanceColor) aliveMesh.instanceColor.needsUpdate = true;
+    model.add(aliveMesh);
+
+    const diamond = new THREE.OctahedronGeometry(1, 0);
+    const lossMaterial = new THREE.MeshStandardMaterial({
+      color: colors.loss,
+      roughness: 0.48,
+      metalness: 0.02,
+    });
+    lostMesh = new THREE.InstancedMesh(diamond, lossMaterial, lostIndices.length);
+    lostMesh.userData.edgeIndices = lostIndices;
+    model.add(lostMesh);
+  }
+
+  function buildBoundaryLine(color, pointAt) {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute(
+      &quot;position&quot;,
+      new THREE.Float32BufferAttribute(new Array((cycleSegments + 1) * 3).fill(0), 3),
+    );
+    const line = new THREE.Line(
+      geometry,
+      new THREE.LineBasicMaterial({
+        color,
+        transparent: true,
+        opacity: 0.98,
+        depthTest: false,
+      }),
+    );
+    line.userData.pointAt = pointAt;
+    line.renderOrder = 8;
+    return line;
+  }
+
+  function buildCycles() {
+    boundaryLines.forEach(disposeObject);
+    boundaryLines = [
+      buildBoundaryLine(colors.u, (t) =&gt; displayPoint(0, L * t)),
+      buildBoundaryLine(colors.u, (t) =&gt; displayPoint(L, L * t)),
+      buildBoundaryLine(colors.cycleV, (t) =&gt; displayPoint(L * t, 0)),
+      buildBoundaryLine(colors.cycleV, (t) =&gt; displayPoint(L * t, L)),
+    ];
+    model.add(...boundaryLines);
+  }
+
+  function buildSelectionMarker() {
+    disposeObject(selectedMarker);
+    selectedMarker = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 16, 10),
+      new THREE.MeshBasicMaterial({ color: colors.selected, wireframe: true }),
+    );
+    model.add(selectedMarker);
+  }
+
+  function qubitRadius() {
+    return Math.max(0.065, Math.min(0.145, 0.24 * Math.sqrt(4 / L)));
+  }
+
+  function updateEdgeLinePositions() {
+    if (!edgeLine) return;
+    const attribute = edgeLine.geometry.getAttribute(&quot;position&quot;);
+    edgeCoordinates.forEach(([edge, t], index) =&gt; {
+      const point = edgePoint(edge, t);
+      attribute.setXYZ(index, point.x, point.y, point.z);
+    });
+    attribute.needsUpdate = true;
+    edgeLine.geometry.computeBoundingSphere();
+  }
+
+  function updateSurfacePositions() {
+    if (!morphSurface) return;
+    const attribute = morphSurface.geometry.getAttribute(&quot;position&quot;);
+    surfaceCoordinates.forEach(([a, b], index) =&gt; {
+      const point = displayPoint(a, b);
+      attribute.setXYZ(index, point.x, point.y, point.z);
+    });
+    attribute.needsUpdate = true;
+    morphSurface.geometry.computeVertexNormals();
+    morphSurface.geometry.computeBoundingSphere();
+    morphSurface.visible = surfaceInput.checked;
+  }
+
+  function updateQubitPositions() {
+    const radius = qubitRadius();
+    for (const mesh of [aliveMesh, lostMesh]) {
+      if (!mesh) continue;
+      mesh.userData.edgeIndices.forEach((edgeIndex, instanceIndex) =&gt; {
+        const point = edgePoint(edges[edgeIndex], 0.5);
+        dummy.position.copy(point);
+        const scale = mesh === lostMesh ? radius * 1.28 : radius;
+        dummy.scale.setScalar(scale);
+        dummy.rotation.set(0, 0, mesh === lostMesh ? Math.PI / 4 : 0);
+        dummy.updateMatrix();
+        mesh.setMatrixAt(instanceIndex, dummy.matrix);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+      mesh.computeBoundingSphere();
+    }
+  }
+
+  function updateCyclePositions() {
+    boundaryLines.forEach((line) =&gt; {
+      const attribute = line.geometry.getAttribute(&quot;position&quot;);
+      for (let index = 0; index &lt;= cycleSegments; index += 1) {
+        const point = line.userData.pointAt(index / cycleSegments);
+        attribute.setXYZ(index, point.x, point.y, point.z);
+      }
+      attribute.needsUpdate = true;
+      line.geometry.computeBoundingSphere();
+      line.visible = cyclesInput.checked;
+    });
+  }
+
+  function mod(value) {
+    return ((value % L) + L) % L;
+  }
+
+  function edgeDescription(edgeIndex) {
+    const edge = edges[edgeIndex];
+    const state = lossSample[edgeIndex] ? &quot;known loss&quot; : &quot;surviving&quot;;
+    const wrap = (
+      (edge.orientation === &quot;H&quot; &amp;&amp; edge.x === L - 1)
+      || (edge.orientation === &quot;V&quot; &amp;&amp; edge.y === L - 1)
+    ) ? &quot; · periodic wrap&quot; : &quot;&quot;;
+    let stars;
+    let plaquettes;
+
+    if (edge.orientation === &quot;H&quot;) {
+      stars = `S(${edge.x},${edge.y}) ↔ S(${mod(edge.x + 1)},${edge.y})`;
+      plaquettes = `P(${edge.x},${edge.y}) ↔ P(${edge.x},${mod(edge.y - 1)})`;
+    } else {
+      stars = `S(${edge.x},${edge.y}) ↔ S(${edge.x},${mod(edge.y + 1)})`;
+      plaquettes = `P(${edge.x},${edge.y}) ↔ P(${mod(edge.x - 1)},${edge.y})`;
+    }
+    return `${edge.orientation}(${edge.x},${edge.y}) · ${state}${wrap} · ${stars} · ${plaquettes}`;
+  }
+
+  function updateSelection() {
+    if (!edges.length) return;
+    selectedEdgeIndex = Math.min(selectedEdgeIndex, edges.length - 1);
+    const edge = edges[selectedEdgeIndex];
+    const point = edgePoint(edge, 0.5);
+    selectedMarker.position.copy(point);
+    selectedMarker.scale.setScalar(qubitRadius() * 1.75);
+    selectionLabel.textContent = edgeDescription(selectedEdgeIndex);
+  }
+
+  function updateModelPositions() {
+    updateSurfacePositions();
+    updateEdgeLinePositions();
+    updateQubitPositions();
+    updateCyclePositions();
+    updateSelection();
+    updateMorphUI();
+  }
+
+  function morphPhase(amount) {
+    if (amount &lt; 0.015) {
+      return { key: &quot;flat&quot;, label: &quot;펼친 격자&quot; };
+    }
+    if (amount &lt; rollEnd - 0.025) {
+      return { key: &quot;cylinder&quot;, label: &quot;위·아래 연결&quot; };
+    }
+    if (amount &lt;= rollEnd + 0.025) {
+      return { key: &quot;cylinder&quot;, label: &quot;원통 완성&quot; };
+    }
+    if (amount &lt; 0.985) {
+      return { key: &quot;torus&quot;, label: &quot;좌·우 연결&quot; };
+    }
+    return { key: &quot;torus&quot;, label: &quot;토러스 완성&quot; };
+  }
+
+  function updateMorphUI() {
+    const phase = morphPhase(morph);
+    morphInput.value = String(morph);
+    phaseLabel.textContent = phase.label;
+    phaseProgress.style.width = `${(100 * morph).toFixed(1)}%`;
+    phaseSteps.forEach((step) =&gt; {
+      step.classList.toggle(&quot;is-active&quot;, step.dataset.phase === phase.key);
+    });
+
+    const lostCount = lossSample.filter(Boolean).length;
+    stage.setAttribute(
+      &quot;aria-label&quot;,
+      `L=${L}, 데이터 큐빗 ${2 * L * L}개, known loss ${lostCount}개, ${phase.label} 단계`,
+    );
+  }
+
+  function updateStatus() {
+    const lostCount = lossSample.filter(Boolean).length;
+    sizeLabels.forEach((label) =&gt; { label.textContent = `L = ${L}`; });
+    sizeControl.textContent = String(L);
+    qubitLabel.textContent = String(2 * L * L);
+    lostLabel.textContent = String(lostCount);
+    lossRateLabel.textContent = pLoss.toFixed(2);
+    updateMorphUI();
+  }
+
+  function sampleLoss() {
+    lossSample = edges.map(() =&gt; Math.random() &lt; pLoss);
+    buildQubitMeshes();
+    buildSelectionMarker();
+    updateStatus();
+    updateModelPositions();
+  }
+
+  function rebuildLattice() {
+    edges = makeEdges();
+    selectedEdgeIndex = 0;
+    buildSurface();
+    buildEdgeLines();
+    buildCycles();
+    sampleLoss();
+  }
+
+  function easeInOutCubic(value) {
+    return value &lt; 0.5
+      ? 4 * value * value * value
+      : 1 - Math.pow(-2 * value + 2, 3) / 2;
+  }
+
+  function setViewButtonState(view) {
+    viewButtons.forEach((button) =&gt; {
+      const active = button.dataset.view === view;
+      button.setAttribute(&quot;aria-pressed&quot;, String(active));
+      button.classList.toggle(&quot;btn-primary&quot;, active);
+    });
+  }
+
+  function startMorphTransition(view) {
+    const target = view === &quot;torus&quot; ? 1 : 0;
+    if (target === 1 &amp;&amp; morph &gt; 0.995) {
+      morph = 0;
+      updateModelPositions();
+    }
+
+    morphTarget = target;
+    cameraAuto = true;
+    setViewButtonState(view);
+    const fullForward = morph &lt; 0.005 &amp;&amp; target === 1;
+    const distance = Math.abs(target - morph);
+    const duration = reducedMotion
+      ? 0
+      : (fullForward ? 5000 : Math.max(900, 3200 * distance));
+
+    if (duration === 0) {
+      morph = target;
+      morphTransition = null;
+      updateModelPositions();
+      resetCamera();
+      return;
+    }
+
+    morphTransition = {
+      from: morph,
+      to: target,
+      start: performance.now(),
+      duration,
+      fullForward,
+    };
+  }
+
+  function resize() {
+    const width = Math.max(1, stage.clientWidth);
+    const height = Math.max(1, stage.clientHeight);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    model.position.x = width &lt; 560 ? -0.38 : -0.58;
+  }
+
+  function pickQubit(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    const intersections = raycaster.intersectObjects([aliveMesh, lostMesh].filter(Boolean));
+    if (!intersections.length) return;
+    const hit = intersections[0];
+    selectedEdgeIndex = hit.object.userData.edgeIndices[hit.instanceId];
+    updateSelection();
+  }
+
+  morphInput.addEventListener(&quot;input&quot;, () =&gt; {
+    morphTransition = null;
+    morph = Number(morphInput.value);
+    morphTarget = morph;
+    cameraAuto = true;
+    updateModelPositions();
+    camera.position.copy(cameraPositionForMorph(morph));
+    controls.target.set(0, 0, 0);
+    controls.update();
+    if (morph &lt; 0.005) {
+      setViewButtonState(&quot;flat&quot;);
+    } else if (morph &gt; 0.995) {
+      setViewButtonState(&quot;torus&quot;);
+    } else {
+      viewButtons.forEach((button) =&gt; {
+        button.setAttribute(&quot;aria-pressed&quot;, &quot;false&quot;);
+        button.classList.remove(&quot;btn-primary&quot;);
+      });
+    }
+  });
+  sizeInput.addEventListener(&quot;input&quot;, () =&gt; {
+    sizeControl.textContent = sizeInput.value;
+  });
+  sizeInput.addEventListener(&quot;change&quot;, () =&gt; {
+    L = Number(sizeInput.value);
+    rebuildLattice();
+  });
+  lossInput.addEventListener(&quot;input&quot;, () =&gt; {
+    pLoss = Number(lossInput.value);
+    lossRateLabel.textContent = pLoss.toFixed(2);
+  });
+  lossInput.addEventListener(&quot;change&quot;, sampleLoss);
+  surfaceInput.addEventListener(&quot;change&quot;, updateModelPositions);
+  cyclesInput.addEventListener(&quot;change&quot;, updateCyclePositions);
+  resampleButton.addEventListener(&quot;click&quot;, sampleLoss);
+  resetButton.addEventListener(&quot;click&quot;, resetCamera);
+  viewButtons.forEach((button) =&gt; {
+    button.addEventListener(&quot;click&quot;, () =&gt; startMorphTransition(button.dataset.view));
+  });
+  controls.addEventListener(&quot;start&quot;, () =&gt; {
+    cameraAuto = false;
+  });
+
+  renderer.domElement.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
+    pointerStart = { x: event.clientX, y: event.clientY };
+  });
+  renderer.domElement.addEventListener(&quot;pointerup&quot;, (event) =&gt; {
+    if (!pointerStart) return;
+    const distance = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y);
+    pointerStart = null;
+    if (distance &lt; 5) pickQubit(event);
+  });
+
+  new ResizeObserver(resize).observe(stage);
+  resetCamera();
+  rebuildLattice();
+  resize();
+
+  function animate(timestamp) {
+    requestAnimationFrame(animate);
+    if (morphTransition) {
+      const progress = THREE.MathUtils.clamp(
+        (timestamp - morphTransition.start) / morphTransition.duration,
+        0,
+        1,
+      );
+
+      if (morphTransition.fullForward) {
+        if (progress &lt; 0.38) {
+          morph = rollEnd * easeInOutCubic(progress / 0.38);
+        } else if (progress &lt; 0.52) {
+          morph = rollEnd;
+        } else {
+          morph = THREE.MathUtils.lerp(
+            rollEnd,
+            1,
+            easeInOutCubic((progress - 0.52) / 0.48),
+          );
+        }
+      } else {
+        morph = THREE.MathUtils.lerp(
+          morphTransition.from,
+          morphTransition.to,
+          easeInOutCubic(progress),
+        );
+      }
+
+      updateModelPositions();
+      if (cameraAuto) {
+        camera.position.copy(cameraPositionForMorph(morph));
+        controls.target.set(0, 0, 0);
+      }
+      if (progress &gt;= 1) {
+        morph = morphTransition.to;
+        morphTransition = null;
+        updateModelPositions();
+      }
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(animate);
+&lt;/script&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
