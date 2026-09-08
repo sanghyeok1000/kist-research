@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="689" height="530" viewBox="0 0 689 530">
+  <rect width="689" height="530" fill="white"/>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#111;stroke-width:1.2}.grid{stroke:#77808a;stroke-width:.8;opacity:.62}.fit{fill:none;stroke-width:1.8}.err{stroke-width:1.1}.tick{font-size:14px}.lab{font-size:18px}.title{font-size:22px}.legend{font-size:14px}
+  </style>
+  <line x1="86" y1="35" x2="86" y2="485" class="axis"/><line x1="86" y1="485" x2="671" y2="485" class="axis"/>
+  <g class="grid">
+    <line x1="86" y1="466" x2="671" y2="466"/><line x1="86" y1="402" x2="671" y2="402"/><line x1="86" y1="338" x2="671" y2="338"/><line x1="86" y1="274" x2="671" y2="274"/><line x1="86" y1="210" x2="671" y2="210"/><line x1="86" y1="146" x2="671" y2="146"/><line x1="86" y1="82" x2="671" y2="82"/>
+    <line x1="86" y1="35" x2="86" y2="485"/><line x1="294" y1="35" x2="294" y2="485"/><line x1="502" y1="35" x2="502" y2="485"/><line x1="671" y1="35" x2="671" y2="485"/>
+  </g>
+  <line x1="86" y1="381" x2="671" y2="82" stroke="#ff3333" class="fit"/>
+  <line x1="86" y1="450" x2="671" y2="73" stroke="#00a651" class="fit"/>
+  <line x1="86" y1="479" x2="671" y2="68" stroke="#304fbf" class="fit"/>
+  <g stroke="#ff3333" fill="#ff3333" class="err">
+    <path d="M86 374v12m-4-12h8m-8 12h8 M169 342v12m-4-12h8m-8 12h8 M252 293v12m-4-12h8m-8 12h8 M335 262v12m-4-12h8m-8 12h8 M419 228v12m-4-12h8m-8 12h8 M502 191v12m-4-12h8m-8 12h8 M671 52v14m-4-14h8m-8 14h8" fill="none"/>
+    <circle cx="86" cy="380" r="4.8"/><circle cx="169" cy="348" r="4.8"/><circle cx="252" cy="299" r="4.8"/><circle cx="335" cy="268" r="4.8"/><circle cx="419" cy="234" r="4.8"/><circle cx="502" cy="197" r="4.8"/><circle cx="671" cy="59" r="4.8"/>
+  </g>
+  <g stroke="#00a651" fill="#00a651" class="err">
+    <path d="M86 443v12m-4-12h8m-8 12h8 M169 384v12m-4-12h8m-8 12h8 M252 341v12m-4-12h8m-8 12h8 M335 304v12m-4-12h8m-8 12h8 M419 244v12m-4-12h8m-8 12h8 M502 199v12m-4-12h8m-8 12h8 M671 42v14m-4-14h8m-8 14h8" fill="none"/>
+    <rect x="81.5" y="444.5" width="9" height="9"/><rect x="164.5" y="385.5" width="9" height="9"/><rect x="247.5" y="342.5" width="9" height="9"/><rect x="330.5" y="305.5" width="9" height="9"/><rect x="414.5" y="245.5" width="9" height="9"/><rect x="497.5" y="200.5" width="9" height="9"/><rect x="666.5" y="43.5" width="9" height="9"/>
+  </g>
+  <g stroke="#304fbf" fill="#304fbf" class="err">
+    <path d="M86 472v12m-4-12h8m-8 12h8 M169 437v12m-4-12h8m-8 12h8 M252 389v12m-4-12h8m-8 12h8 M335 326v12m-4-12h8m-8 12h8 M419 257v12m-4-12h8m-8 12h8 M502 204v12m-4-12h8m-8 12h8 M671 34v13m-4-13h8m-8 13h8" fill="none"/>
+    <path d="M86 472l5 6-5 6-5-6z M169 437l5 6-5 6-5-6z M252 389l5 6-5 6-5-6z M335 326l5 6-5 6-5-6z M419 257l5 6-5 6-5-6z M502 204l5 6-5 6-5-6z M671 34l5 6-5 6-5-6z"/>
+  </g>
+  <text x="343" y="25" class="title">p<tspan baseline-shift="sub" font-size="15">loss</tspan> = 0.425</text>
+  <text x="344" y="520" class="lab">p<tspan baseline-shift="sub" font-size="13">comp</tspan></text>
+  <text x="20" y="285" class="lab" transform="rotate(-90 20 285)">p<tspan baseline-shift="sub" font-size="13">fail</tspan></text>
+  <g class="tick"><text x="72" y="505">0.010</text><text x="280" y="505">0.015</text><text x="488" y="505">0.020</text>
+    <text x="48" y="471">0.10</text><text x="48" y="407">0.15</text><text x="48" y="343">0.20</text><text x="48" y="279">0.25</text><text x="48" y="215">0.30</text><text x="48" y="151">0.35</text><text x="48" y="87">0.40</text></g>
+  <g class="legend"><circle cx="101" cy="54" r="4.5" fill="#ff3333"/><text x="124" y="59">L=16</text><rect x="96.5" y="67.5" width="9" height="9" fill="#00a651"/><text x="124" y="77">L=24</text><path d="M101 87l5 6-5 6-5-6z" fill="#304fbf"/><text x="124" y="97">L=32</text></g>
+</svg>
