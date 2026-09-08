@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="524" height="587" viewBox="0 0 524 587">
+  <rect width="524" height="587" fill="white"/>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif;fill:#111}.grid{stroke:#555;stroke-width:1;stroke-dasharray:5 4;opacity:.8}.cell{stroke:none}.sp{font-size:11px;text-anchor:middle}.p{font-size:9px;text-anchor:middle}.axis{font-size:14px}.title{font-size:18px;text-anchor:middle}.loss{stroke:#d62828;stroke-width:6;stroke-linecap:round}.x{stroke:#8b0000;stroke-width:3}.legend{font-size:13px}
+  </style>
+  <text x="262" y="24" class="title">L=6: 28 superplaquettes from 8 known losses</text>
+  <!-- grid geometry: origin (61,72), cell 73.5 x 73.5 -->
+  <g>
+    <!-- y=5 -->
+    <rect x="61" y="72" width="73.5" height="73.5" fill="#e7e4a8"/><rect x="134.5" y="72" width="73.5" height="73.5" fill="#7bd0d8"/><rect x="208" y="72" width="73.5" height="73.5" fill="#cfe0e8"/><rect x="281.5" y="72" width="73.5" height="73.5" fill="#ffb278"/><rect x="355" y="72" width="73.5" height="73.5" fill="#ffb278"/><rect x="428.5" y="72" width="73.5" height="73.5" fill="#cfe0e8"/>
+    <!-- y=4 -->
+    <rect x="61" y="145.5" width="73.5" height="73.5" fill="#d8dde2"/><rect x="134.5" y="145.5" width="73.5" height="73.5" fill="#d8dde2"/><rect x="208" y="145.5" width="73.5" height="73.5" fill="#ddd98a"/><rect x="281.5" y="145.5" width="73.5" height="73.5" fill="#ddd98a"/><rect x="355" y="145.5" width="73.5" height="73.5" fill="#d8d78c"/><rect x="428.5" y="145.5" width="73.5" height="73.5" fill="#d8dde2"/>
+    <!-- y=3 -->
+    <rect x="61" y="219" width="73.5" height="73.5" fill="#e3a0cf"/><rect x="134.5" y="219" width="73.5" height="73.5" fill="#e4bdd7"/><rect x="208" y="219" width="73.5" height="73.5" fill="#9bd89d"/><rect x="281.5" y="219" width="73.5" height="73.5" fill="#aab0b5"/><rect x="355" y="219" width="73.5" height="73.5" fill="#d6b4ae"/><rect x="428.5" y="219" width="73.5" height="73.5" fill="#b9c4ca"/>
+    <!-- y=2 -->
+    <rect x="61" y="292.5" width="73.5" height="73.5" fill="#bba7d8"/><rect x="134.5" y="292.5" width="73.5" height="73.5" fill="#d8c5df"/><rect x="208" y="292.5" width="73.5" height="73.5" fill="#9bd89d"/><rect x="281.5" y="292.5" width="73.5" height="73.5" fill="#c3aaa5"/><rect x="355" y="292.5" width="73.5" height="73.5" fill="#d6b4ae"/><rect x="428.5" y="292.5" width="73.5" height="73.5" fill="#d7c4de"/>
+    <!-- y=1 -->
+    <rect x="61" y="366" width="73.5" height="73.5" fill="#84ca91"/><rect x="134.5" y="366" width="73.5" height="73.5" fill="#b7d9c4"/><rect x="208" y="366" width="73.5" height="73.5" fill="#9bd89d"/><rect x="281.5" y="366" width="73.5" height="73.5" fill="#f18282"/><rect x="355" y="366" width="73.5" height="73.5" fill="#f5a0ad"/><rect x="428.5" y="366" width="73.5" height="73.5" fill="#c4b0dd"/>
+    <!-- y=0 -->
+    <rect x="61" y="439.5" width="73.5" height="73.5" fill="#75abd2"/><rect x="134.5" y="439.5" width="73.5" height="73.5" fill="#75abd2"/><rect x="208" y="439.5" width="73.5" height="73.5" fill="#cbd6df"/><rect x="281.5" y="439.5" width="73.5" height="73.5" fill="#ffb278"/><rect x="355" y="439.5" width="73.5" height="73.5" fill="#ffb278"/><rect x="428.5" y="439.5" width="73.5" height="73.5" fill="#ffd19f"/>
+  </g>
+  <!-- dashed grid -->
+  <g class="grid">
+    <line x1="61" y1="72" x2="61" y2="513"/><line x1="134.5" y1="72" x2="134.5" y2="513"/><line x1="208" y1="72" x2="208" y2="513"/><line x1="281.5" y1="72" x2="281.5" y2="513"/><line x1="355" y1="72" x2="355" y2="513"/><line x1="428.5" y1="72" x2="428.5" y2="513"/><line x1="502" y1="72" x2="502" y2="513"/>
+    <line x1="61" y1="72" x2="502" y2="72"/><line x1="61" y1="145.5" x2="502" y2="145.5"/><line x1="61" y1="219" x2="502" y2="219"/><line x1="61" y1="292.5" x2="502" y2="292.5"/><line x1="61" y1="366" x2="502" y2="366"/><line x1="61" y1="439.5" x2="502" y2="439.5"/><line x1="61" y1="513" x2="502" y2="513"/>
+  </g>
+  <!-- labels -->
+  <g>
+    <g class="sp"><text x="97.75" y="105">SP24</text><text x="171.25" y="105">SP25</text><text x="244.75" y="105">SP26</text><text x="318.25" y="105">SP3</text><text x="391.75" y="105">SP4</text><text x="465.25" y="105">SP27</text>
+      <text x="97.75" y="178.5">SP21</text><text x="171.25" y="178.5">SP21</text><text x="244.75" y="178.5">SP22</text><text x="318.25" y="178.5">SP22</text><text x="391.75" y="178.5">SP23</text><text x="465.25" y="178.5">SP21</text>
+      <text x="97.75" y="252">SP17</text><text x="171.25" y="252">SP18</text><text x="244.75" y="252">SP8</text><text x="318.25" y="252">SP19</text><text x="391.75" y="252">SP15</text><text x="465.25" y="252">SP20</text>
+      <text x="97.75" y="325.5">SP12</text><text x="171.25" y="325.5">SP13</text><text x="244.75" y="325.5">SP8</text><text x="318.25" y="325.5">SP14</text><text x="391.75" y="325.5">SP15</text><text x="465.25" y="325.5">SP16</text>
+      <text x="97.75" y="399">SP6</text><text x="171.25" y="399">SP7</text><text x="244.75" y="399">SP8</text><text x="318.25" y="399">SP9</text><text x="391.75" y="399">SP10</text><text x="465.25" y="399">SP11</text>
+      <text x="97.75" y="472.5">SP0</text><text x="171.25" y="472.5">SP1</text><text x="244.75" y="472.5">SP2</text><text x="318.25" y="472.5">SP3</text><text x="391.75" y="472.5">SP4</text><text x="465.25" y="472.5">SP5</text></g>
+    <g class="p"><text x="97.75" y="118">P(0,5)</text><text x="171.25" y="118">P(1,5)</text><text x="244.75" y="118">P(2,5)</text><text x="318.25" y="118">P(3,5)</text><text x="391.75" y="118">P(4,5)</text><text x="465.25" y="118">P(5,5)</text>
+      <text x="97.75" y="191.5">P(0,4)</text><text x="171.25" y="191.5">P(1,4)</text><text x="244.75" y="191.5">P(2,4)</text><text x="318.25" y="191.5">P(3,4)</text><text x="391.75" y="191.5">P(4,4)</text><text x="465.25" y="191.5">P(5,4)</text>
+      <text x="97.75" y="265">P(0,3)</text><text x="171.25" y="265">P(1,3)</text><text x="244.75" y="265">P(2,3)</text><text x="318.25" y="265">P(3,3)</text><text x="391.75" y="265">P(4,3)</text><text x="465.25" y="265">P(5,3)</text>
+      <text x="97.75" y="338.5">P(0,2)</text><text x="171.25" y="338.5">P(1,2)</text><text x="244.75" y="338.5">P(2,2)</text><text x="318.25" y="338.5">P(3,2)</text><text x="391.75" y="338.5">P(4,2)</text><text x="465.25" y="338.5">P(5,2)</text>
+      <text x="97.75" y="412">P(0,1)</text><text x="171.25" y="412">P(1,1)</text><text x="244.75" y="412">P(2,1)</text><text x="318.25" y="412">P(3,1)</text><text x="391.75" y="412">P(4,1)</text><text x="465.25" y="412">P(5,1)</text>
+      <text x="97.75" y="485.5">P(0,0)</text><text x="171.25" y="485.5">P(1,0)</text><text x="244.75" y="485.5">P(2,0)</text><text x="318.25" y="485.5">P(3,0)</text><text x="391.75" y="485.5">P(4,0)</text><text x="465.25" y="485.5">P(5,0)</text></g>
+  </g>
+  <!-- known lost edges -->
+  <g class="loss">
+    <line x1="61" y1="145.5" x2="61" y2="219"/><line x1="134.5" y1="145.5" x2="134.5" y2="219"/><line x1="281.5" y1="145.5" x2="281.5" y2="219"/>
+    <line x1="208" y1="292.5" x2="281.5" y2="292.5"/><line x1="355" y1="292.5" x2="428.5" y2="292.5"/><line x1="208" y1="366" x2="281.5" y2="366"/>
+    <line x1="281.5" y1="513" x2="355" y2="513"/><line x1="355" y1="513" x2="428.5" y2="513"/>
+  </g>
+  <g class="x">
+    <path d="M56 177l10 10m0-10l-10 10 M129.5 177l10 10m0-10l-10 10 M276.5 177l10 10m0-10l-10 10 M239.75 287.5l10 10m0-10l-10 10 M386.75 287.5l10 10m0-10l-10 10 M239.75 361l10 10m0-10l-10 10 M313.25 508l10 10m0-10l-10 10 M386.75 508l10 10m0-10l-10 10"/>
+  </g>
+  <!-- axes -->
+  <g class="axis"><text x="276" y="544">x</text><text x="21" y="297" transform="rotate(-90 21 297)">y</text><text x="58" y="530">0</text><text x="131" y="530">1</text><text x="205" y="530">2</text><text x="278" y="530">3</text><text x="352" y="530">4</text><text x="425" y="530">5</text><text x="499" y="530">6</text><text x="43" y="516">0</text><text x="43" y="442">1</text><text x="43" y="369">2</text><text x="43" y="295">3</text><text x="43" y="222">4</text><text x="43" y="148">5</text><text x="43" y="76">6</text></g>
+  <!-- legend -->
+  <line x1="170" y1="567" x2="206" y2="567" class="loss"/><path d="M184 562l10 10m0-10l-10 10" class="x"/><text x="217" y="572" class="legend">known lost physical edge</text>
+</svg>
