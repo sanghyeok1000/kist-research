@@ -181,6 +181,10 @@ The implementation keeps track of:
 
 A self-loop toggles the same effective supercheck twice and therefore cancels from the syndrome; it is excluded from the matching graph but retained as diagnostic information.
 
+![Loss-induced superplaquette reconstruction](./assets/superplaquette_example.svg)
+
+*Superplaquette example.* In this `L=6` sample, eight known lost physical edges merge the original plaquettes into 28 effective superplaquettes. Red crossed edges indicate detected qubit losses, while plaquettes sharing the same `SP` label belong to the same effective stabilizer component.
+
 ### 5.4 Weighted degraded graph
 
 Parallel physical interfaces between the same two superplaquettes are collapsed into one superedge.
@@ -339,6 +343,10 @@ The median is approximately **6.86%**.
 
 As expected, increasing qubit loss reduces the amount of additional computational error that can be tolerated.
 
+![Logical failure rate at p_loss = 0.2](./assets/loss_020_threshold.svg)
+
+*Moderate-loss Monte Carlo result (`p_loss = 0.2`).* The curves show `p_fail` versus `p_comp` for `L=16,24,32`, using **10,000 Monte Carlo trials per point**. Their finite-size crossings lie near `p_comp ≈ 0.069`.
+
 ### 8.3 High-loss regime: `p_loss = 0.425`
 
 The stored phase sweep includes the following Monte Carlo points:
@@ -368,6 +376,10 @@ for the valid `L=24`–`L=32` crossing, i.e. **about 2.20%**.
 The corresponding plot in the Stace–Barrett reference is visually around the **~1.8%** range for `p_loss = 0.425`. As a **finite-size, plot-level comparison**, the present implementation therefore shows an increase of roughly **0.4 percentage points** (on the order of **20% relative**).
 
 This comparison should be interpreted carefully. The reference paper explicitly reports that universal finite-size scaling begins to break down around `p_loss ≥ 0.425` for `L ≤ 32` because the largest superplaquette becomes comparable to the lattice size. Consequently, the value above is **not presented as a new asymptotic threshold claim** and should not be attributed to Dijkstra alone without a controlled ablation study.
+
+![Logical failure rate at p_loss = 0.425](./assets/loss_0425_threshold.svg)
+
+*High-loss Monte Carlo result (`p_loss = 0.425`).* The curves show `p_fail` versus `p_comp` for `L=16,24,32`, using **10,000 Monte Carlo trials per point**. Strong finite-size/percolation effects are present in this regime; the valid `L=24`–`L=32` crossing is near `p_comp ≈ 0.022` and is therefore treated as a finite-size estimate rather than a precise asymptotic threshold.
 
 ### 8.4 Loss endpoint
 
