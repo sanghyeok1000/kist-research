@@ -159,18 +159,13 @@ The notebook first builds an `L × L` periodic toric lattice.
 For example, the stored `L=6` validation run contains **72 data qubits**.
 
 The separate file [`toric-code-torus.html`](./toric-code-torus.html) is an interactive **Toric Code Torus Visualizer** made to understand how the periodic square lattice wraps onto a torus and why non-contractible cycles correspond to logical operators.
+
 ### Toric-code topology visualization
 
-The animation shows how the periodic boundaries of the square lattice
-correspond to a torus. The two non-contractible directions of the torus
-provide the topological structure underlying the logical operators.
+The animation shows how the periodic boundaries of the square lattice correspond to a torus. The two non-contractible directions of the torus provide the topological structure underlying the logical operators.
 
-<video src="./assets/surface_code.mov"
-       width="800"
-       controls
-       muted
-       loop>
-</video>
+▶ **[Watch the toric-code topology animation](./assets/surface_code.mov)**
+
 ### 5.2 Error sampling
 
 For each Monte Carlo trial:
