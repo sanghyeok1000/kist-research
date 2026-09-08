@@ -119,26 +119,26 @@ Suppose two neighboring superplaquettes share `n_ℓ` surviving physical edges. 
 
 For an independent computational-error probability `p_comp`, the effective odd-error probability is
 
-\[
+$$
 p_\ell
 = \sum_{m\;\mathrm{odd}}
 \binom{n_\ell}{m}
  p_{\mathrm{comp}}^m
  (1-p_{\mathrm{comp}})^{n_\ell-m}
 = \frac{1-(1-2p_{\mathrm{comp}})^{n_\ell}}{2}.
-\]
+$$
 
 The corresponding log-likelihood weight is
 
-\[
+$$
 w_\ell = \log\left(\frac{1-p_\ell}{p_\ell}\right).
-\]
+$$
 
 For two syndrome defects `u` and `v`, Dijkstra computes
 
-\[
+$$
 d(u,v)=\min_{\gamma:u\rightarrow v}\sum_{\ell\in\gamma} w_\ell.
-\]
+$$
 
 These pairwise distances define the weighted complete graph supplied to MWPM.
 
@@ -221,9 +221,9 @@ The implementation therefore restores each selected superplaquette path to a phy
 
 After correction, the code evaluates the topology of
 
-\[
-C = E + E',
-\]
+$$
+C = E + E'.
+$$
 
 where `E` is the sampled physical error chain and `E'` is the correction chain.
 
@@ -283,9 +283,9 @@ This is an explicit limitation rather than a hidden assumption.
 
 The main finite-size analysis uses
 
-\[
+$$
 L \in \{16,24,32\}.
-\]
+$$
 
 Depending on the cell, the notebook runs either pilot batches or full sweeps with **5,000–10,000 trials per `(p_loss, L, p_comp)` point**.
 
@@ -317,9 +317,9 @@ For `p_loss = 0`, the stored finite-size crossings are:
 
 Their median is approximately
 
-\[
-p_{\mathrm{comp}}^{\mathrm{thr}} \approx 0.10315,
-\]
+$$
+p_{\mathrm{comp}}^{\mathrm{thr}} \approx 0.10315.
+$$
 
 or **10.3%**, consistent with the well-known lossless code-capacity threshold of approximately `10.4%` in the reference loss-tolerant toric/surface-code analysis.
 
@@ -359,9 +359,9 @@ The pairwise linear crossings stored in the notebook are:
 
 Therefore the reproducible high-loss number currently supported by the stored run is
 
-\[
-p_{\mathrm{comp}}^{\mathrm{cross}} \approx 0.022014
-\]
+$$
+p_{\mathrm{comp}}^{\mathrm{cross}} \approx 0.022014.
+$$
 
 for the valid `L=24`–`L=32` crossing, i.e. **about 2.20%**.
 
@@ -373,9 +373,9 @@ This comparison should be interpreted carefully. The reference paper explicitly 
 
 The phase sweep explicitly includes the percolation endpoint
 
-\[
-(p_{\mathrm{loss}}, p_{\mathrm{comp}})=(0.5,0),
-\]
+$$
+(p_{\mathrm{loss}}, p_{\mathrm{comp}})=(0.5,0).
+$$
 
 consistent with the analytical 50% detectable-loss limit of the square-lattice topological code.
 
